@@ -20,7 +20,6 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
-#from archives.models import *
 from django.utils.encoding import force_unicode, smart_str
 from django.core import serializers
 from django.conf import settings
@@ -34,7 +33,6 @@ def home(request):
     Case of GET REQUEST '/'
     home page
     """
-    temp_values = Context()
     temp_values = {
         "subscroll":True,
         }

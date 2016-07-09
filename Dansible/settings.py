@@ -27,6 +27,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if not SECRET_KEY:
     SECRET_KEY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcd"
 
+# You should set this KEY in local_settings.py.
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 DEPLOY = False
