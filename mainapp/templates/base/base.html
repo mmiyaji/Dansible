@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Dashboard Template for Bootstrap</title>
+
+    {% load staticfiles %}
+    <link href="{% static 'dansible/css/bootstrap.min.css' %}" rel="stylesheet" id="themesid">
+    <link href="{% static 'dansible/css/dashboard.css' %}" rel="stylesheet">
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+  </head>
+
+  <body{% if subscroll %} data-spy="scroll" data-target=".subnav" data-offset="50"{% endif %}>
+    {% include "component/nav_bar.html" %}
+    <div>
+      {% block main %}
+      {% endblock main %}
+    </div>
+    <!-- Bootstrap core JavaScript
+         ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="{% static 'dansible/js/jquery.min.js' %}"></script>
+    <script src="{% static 'dansible/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'dansible/js/holder.min.js' %}"></script>
+  </body>
+</html>
