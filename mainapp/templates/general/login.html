@@ -1,0 +1,76 @@
+{% extends "base/base.html" %}
+{% load staticfiles %}
+{% block main %}
+<div class="container">
+  <div class="page-header">
+      <h3>
+        Login
+      </h3>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-md-offset-4">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <form accept-charset="utf-8" role="form" action="/login/" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        <div class="form-group">
+                            <input type="text" id="username" name="username" class="form-control"
+                                   placeholder="Username" required autofocus>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" id="password" name="password" class="form-control"
+                                   placeholder="Password" required>
+                        </div>
+                        {% if login_failed %}
+                          <p class="text-danger">Sorry, that login was invalid.  Please try again.</p>
+                        {% endif %}
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Log in">
+                    </fieldset>
+                </form>
+                <hr />
+                <button class="btn btn-lg btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseSingup" {% if signup_failed %}aria-expanded="true"{% else%}aria-expanded="false"{% endif %} aria-controls="collapseSingup">
+                  Sign Up
+                </button>
+                <div class="collapse" id="collapseSingup">
+                  <div class="well">
+                    <form accept-charset="utf-8" role="form" action="/signup/" method="post">
+                      {% csrf_token %}
+                      <fieldset>
+                        <div class="form-group">
+                          <input type="text" id="username" name="username" class="form-control"
+                                 placeholder="Username" required autofocus value="{{ username }}">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" id="first_name" name="first_name" class="form-control"
+                                 placeholder="first_name" value="{{ first_name }}">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" id="last_name" name="last_name" class="form-control"
+                                 placeholder="last_name" value="{{ last_name }}">
+                        </div>
+                        <div class="form-group">
+                          <input type="text" id="email" name="email" class="form-control"
+                                 placeholder="email" required value="{{ email }}">
+                        </div>
+                        <div class="form-group">
+                          <input type="password" id="password" name="password" class="form-control"
+                                 placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                          <input type="password" id="password_confirm" name="password_confirm" class="form-control"
+                                 placeholder="Password (Confirm)" required>
+                        </div>
+                        {% if signup_failed %}
+                        <p class="text-danger">Sorry, that user was invalid.  Please try again.</p>
+                        {% endif %}
+                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Submit">
+                      </fieldset>
+                    </form>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock main %}
