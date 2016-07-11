@@ -12,9 +12,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 import sys, os
+
+DEBUG = True
+DEPLOY = False
+SECRET_KEY = ""
+
 try:
     from local_settings import *
-except:
+except ImportError:
     pass
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -25,16 +30,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-try:
-    SECRET_KEY = SECRET_KEY
-except NameError:
+if not SECRET_KEY:
     SECRET_KEY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcd"
 
 # You should set this KEY in local_settings.py.
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-DEPLOY = False
 
 ALLOWED_HOSTS = []
 
