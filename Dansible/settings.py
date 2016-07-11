@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# encoding: utf-8
 """
 Django settings for Dansible project.
 
@@ -9,8 +11,7 @@ https://docs.djangoproject.com/en/1.9/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.9/ref/settings/
 """
-
-import os
+import sys, os
 try:
     from local_settings import *
 except:
@@ -24,7 +25,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-if not SECRET_KEY:
+try:
+    SECRET_KEY = SECRET_KEY
+except NameError:
     SECRET_KEY = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890abcd"
 
 # You should set this KEY in local_settings.py.
