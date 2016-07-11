@@ -34,30 +34,36 @@
                 </button>
                 <div class="collapse" id="collapseSingup">
                   <div class="well">
-                    <form accept-charset="utf-8" role="form" action="/signup/" method="post">
+                    <form class="" accept-charset="utf-8" role="form" action="/signup/" method="post">
                       {% csrf_token %}
                       <fieldset>
                         <div class="form-group">
+                          <label class="control-label" for="username">Username*</label>
                           <input type="text" id="username" name="username" class="form-control"
-                                 placeholder="Username" required autofocus value="{{ username }}">
+                                 placeholder="ex) m-miyaji" required autofocus value="{{ username }}">
                         </div>
                         <div class="form-group">
+                          <label class="control-label" for="first_name">Frst name</label>
                           <input type="text" id="first_name" name="first_name" class="form-control"
-                                 placeholder="first_name" value="{{ first_name }}">
+                                 placeholder="ex) Masahiro" value="{{ first_name }}">
                         </div>
                         <div class="form-group">
+                          <label class="control-label" for="last_name">Last name</label>
                           <input type="text" id="last_name" name="last_name" class="form-control"
-                                 placeholder="last_name" value="{{ last_name }}">
+                                 placeholder="ex) Miyaji" value="{{ last_name }}">
                         </div>
                         <div class="form-group">
+                          <label class="control-label" for="email">Email address*</label>
                           <input type="text" id="email" name="email" class="form-control"
-                                 placeholder="email" required value="{{ email }}">
+                                 placeholder="ex) ruhenheim1223@gmail.com" required value="{{ email }}">
                         </div>
                         <div class="form-group">
+                          <label class="control-label" for="password">Password*</label>
                           <input type="password" id="password" name="password" class="form-control"
                                  placeholder="Password" required>
                         </div>
                         <div class="form-group">
+                          <label class="control-label" for="password_confim">Password (Confirm)*</label>
                           <input type="password" id="password_confirm" name="password_confirm" class="form-control"
                                  placeholder="Password (Confirm)" required>
                         </div>
@@ -72,5 +78,5 @@
             </div>
         </div>
     </div>
-</div>
-{% endblock main %}
+  </div>
+  {% endblock main %}
