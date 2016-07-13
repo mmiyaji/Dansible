@@ -24,6 +24,7 @@ from django.utils.encoding import force_unicode, smart_str
 from django.core import serializers
 from django.conf import settings
 from django.http import Http404
+from django.utils.http import urlencode
 
 from django.template.loader import get_template
 logger = logging.getLogger(__name__)
@@ -42,8 +43,8 @@ def login_view(request):
     #強制的にログアウト
     logout(request)
     username = password = ''
-
-    login_failed = False
+    first_name = last_name = email = ''
+    erorr_code = ''
 
     if request.POST:
         username = request.POST['username'].replace(' ', '').lower()
@@ -54,10 +55,20 @@ def login_view(request):
                 login(request, user)
                 return HttpResponseRedirect('/')
         else:
-            login_failed = True
+            error_code = 'login_failed'
+    elif request.GET:
+        username = request.GET.get('username','').replace(' ', '').lower()
+        first_name = request.GET.get('first_name','')
+        last_name = request.GET.get('last_name','')
+        email = request.GET.get('email','')
+        error_code = request.GET.get('error_code','')
 
     temp_values = {
-        "login_failed": login_failed
+        "error_code": error_code,
+        "username": username,
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
     }
     return render(request, 'general/login.html', temp_values)
 
@@ -66,8 +77,9 @@ def signup_view(request):
     logout(request)
     username = password = password2 = ''
 
-    signup_failed = False
-    login_failed = False
+    first_name = last_name = email = ''
+    error_code = ''
+    error_target = ''
 
     if request.POST:
         username = request.POST['username'].replace(' ', '').lower()
@@ -90,16 +102,23 @@ def signup_view(request):
                     if user.is_active:
                         login(request, user)
                         return HttpResponseRedirect('/')
-        signup_failed = True
+            else:
+                error_code = 'signup_failed'
+        else:
+            error_code = 'signup_failed'
         temp_values = {
-            "signup_failed": signup_failed,
-            "login_failed": login_failed,
+            "error_code": error_code,
             "username": username,
             "first_name": first_name,
             "last_name": last_name,
             "email": email,
         }
-        return render(request, 'general/login.html', temp_values)
+        query = urlencode(temp_values)
+        url = ''.join([
+            reverse('dansible:login'),
+            '?',
+        query])
+        return HttpResponseRedirect(url)
     else:
         return HttpResponseRedirect("/login/")
 

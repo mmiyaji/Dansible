@@ -2,6 +2,13 @@
 {% block main %}
 <div class="row">
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    {% if error_message %}
+    <div class="alert alert-danger" role="alert">
+      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+      <span class="sr-only">Error:</span>
+      {{ error_message }}
+    </div>
+    {% endif %}
     <h1 class="page-header">Dashboard</h1>
     {% include "component/nav_sidebar.html" %}
 
