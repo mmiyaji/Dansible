@@ -25,6 +25,7 @@ from django.core import serializers
 from django.conf import settings
 from django.http import Http404
 from django.utils.http import urlencode
+from django.http import Http404
 
 from django.template.loader import get_template
 logger = logging.getLogger(__name__)
@@ -44,27 +45,34 @@ def login_view(request):
     logout(request)
     username = password = ''
     first_name = last_name = email = ''
-    erorr_code = ''
+    error_list = []
+    error_target = []
 
-    if request.POST:
-        username = request.POST['username'].replace(' ', '').lower()
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            if user.is_active:
-                login(request, user)
-                return HttpResponseRedirect('/')
-        else:
-            error_code = 'login_failed'
-    elif request.GET:
-        username = request.GET.get('username','').replace(' ', '').lower()
+    if request.GET:
+        username = request.GET.get('username','')
         first_name = request.GET.get('first_name','')
         last_name = request.GET.get('last_name','')
         email = request.GET.get('email','')
         error_code = request.GET.get('error_code','')
+    elif request.POST:
+        if 'siginup' in request.POST:
+            signup_view(request)
+        else:
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect('/')
+                else:
+                    error_list.append('login_failed')
+            else:
+                error_list.append('login_failed')
 
     temp_values = {
-        "error_code": error_code,
+        "error_list": error_list,
+        "error_target": error_target,
         "username": username,
         "first_name": first_name,
         "last_name": last_name,
@@ -73,16 +81,14 @@ def login_view(request):
     return render(request, 'general/login.html', temp_values)
 
 def signup_view(request):
-    #強制的にログアウト
-    logout(request)
     username = password = password2 = ''
 
     first_name = last_name = email = ''
-    error_code = ''
-    error_target = ''
+    error_list = []
+    error_target = []
 
     if request.POST:
-        username = request.POST['username'].replace(' ', '').lower()
+        username = request.POST['username']
         password = request.POST['password']
         password2 = request.POST['password_confirm']
         first_name = request.POST['first_name']
@@ -103,25 +109,30 @@ def signup_view(request):
                         login(request, user)
                         return HttpResponseRedirect('/')
             else:
-                error_code = 'signup_failed'
+                error_list.append('wrong_user')
+                error_list.append('signup_failed')
         else:
-            error_code = 'signup_failed'
+            error_list.append('wrong_password')
+            error_list.append('signup_failed')
+            error_target.append('password')
+            error_target.append('password2')
         temp_values = {
-            "error_code": error_code,
+            "error_list": error_list,
+            "error_target": error_target,
             "username": username,
             "first_name": first_name,
             "last_name": last_name,
             "email": email,
         }
-        query = urlencode(temp_values)
-        url = ''.join([
-            reverse('dansible:login'),
-            '?',
-        query])
-        return HttpResponseRedirect(url)
+        # query = urlencode(temp_values)
+        # url = ''.join([
+        #     reverse('dansible:login'),
+        #     '?',
+        # query])
+        # return HttpResponseRedirect(url)
+        return render(request, 'general/login.html', temp_values)
     else:
-        return HttpResponseRedirect("/login/")
-
+        raise Http404
 
 def valid_pass(password):
     """

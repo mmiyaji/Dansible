@@ -6,11 +6,11 @@
     <h3>
       Login
     </h3>
-    {% if error_code %}
+    {% if error_list %}
     <div class="alert alert-danger" role="alert">
       <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
       <span class="sr-only">Error:</span>
-      {{ error_code }}
+      {{ error_list }}
     </div>
     {% endif %}
   </div>
@@ -23,15 +23,15 @@
                     <fieldset>
                         <div class="form-group">
                             <input type="text" id="username" name="username" class="form-control"
-                                   placeholder="Username" required autofocus>
+                                   placeholder="Username" required autofocus value="{{ username }}">
                         </div>
                         <div class="form-group">
                             <input type="password" id="password" name="password" class="form-control"
                                    placeholder="Password" required>
                         </div>
-                        {% ifequal error_code "login_failed" %}
+                        {% if "login_failed" in error_list %}
                           <p class="text-danger">Sorry, that login was invalid.  Please try again.</p>
-                        {% endifequal %}
+                        {% endif %}
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Log in">
                     </fieldset>
                 </form>
@@ -39,7 +39,7 @@
                 <button class="btn btn-lg btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseSignup" aria-expanded="false" aria-controls="collapseSignup">
                   Sign Up
                 </button>
-                <div {% ifequal error_code "signup_failed" %}class="collapsed"{% else%}class="collapse"{% endifequal %} id="collapseSignup">
+                <div {% if "signup_failed" in error_list %}class="collapsed"{% else%}class="collapse"{% endif %} id="collapseSignup">
                   <div class="well">
                     <form class="" accept-charset="utf-8" role="form" action="/signup/" method="post">
                       {% csrf_token %}
@@ -64,19 +64,20 @@
                           <input type="text" id="email" name="email" class="form-control"
                                  placeholder="ex) ruhenheim1223@gmail.com" required value="{{ email }}">
                         </div>
-                        <div class="form-group">
+                        <div {% if "password" in error_target %}class="form-group has-error"{% else %}class="form-group"{% endif %}>
                           <label class="control-label" for="password">Password*</label>
                           <input type="password" id="password" name="password" class="form-control"
                                  placeholder="Password" required>
                         </div>
-                        <div class="form-group">
+                        <div {% if "password2" in error_target %}class="form-group has-error"{% else %}class="form-group"{% endif %}>
                           <label class="control-label" for="password_confim">Password (Confirm)*</label>
                           <input type="password" id="password_confirm" name="password_confirm" class="form-control"
                                  placeholder="Password (Confirm)" required>
                         </div>
-                        {% ifequal error_code "signup_failed" %}
+                        {% if "signup_failed" in error_list %}
                         <p class="text-danger">Sorry, that user was invalid.  Please try again.</p>
-                        {% endifequal %}
+                        {% endif %}
+                        <input type="hidden" name="signup" value="true">
                         <input class="btn btn-lg btn-success btn-block" type="submit" value="Submit">
                       </fieldset>
                     </form>
