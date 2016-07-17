@@ -28,6 +28,8 @@ from django.utils.http import urlencode
 from django.http import Http404
 
 from django.template.loader import get_template
+from mainapp.models import *
+
 logger = logging.getLogger(__name__)
 
 def home(request):

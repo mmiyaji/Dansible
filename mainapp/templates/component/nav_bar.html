@@ -1,25 +1,36 @@
-<nav class="navbar navbar-inverse navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="/">Dansible</a>
-    </div>
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-right">
+<header>
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="/" class="navbar-brand">Dansible</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
         <li{% if not target %} class="active"{% else %}{%ifequal target "dashboard"%} class="active"{%endifequal%}{% endif %}><a href="/">Dashboard</a></li>
-        <li{%ifequal target "settings"%} class="active"{%endifequal%}><a href="/settings">Settings</a></li>
+        <li{%if target in "server,config,ostemplate" %} class="dropdown active"{% else %} class="dropdown"{% endif %}>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Setting <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li{%ifequal target "server"%} class="active"{%endifequal%}><a href="/server/">Server</a></li>
+            <li{%ifequal target "config"%} class="active"{%endifequal%}><a href="/config/">Config</a></li>
+            <li{%ifequal target "ostemplate"%} class="active"{%endifequal%}><a href="/ostemplate/">OS Template</a></li>
+          </ul>
+        </li>
         <li{%ifequal target "help"%} class="active"{%endifequal%}><a href="/help">Help</a></li>
         {% if not user.is_anonymous %}
         <li{%ifequal target "group"%} class="active"{%endifequal%}><a href="/group/">グループ管理</a></li>
-        {% endif %}
         <li{%ifequal target "admin"%} class="active"{%endifequal%}><a href="/admin/">管理者専用ページ</a></li>
-        <li{%ifequal target "login"%} class="active"{%endifequal%}>{% if user.is_anonymous %}<a href="/login/">ログイン</a>{% else %}<a href="/login/">ログアウト【{{user}}】</a>{% endif %}</li>
-      </ul>
+        {% endif %}
+        <li{%ifequal target "login"%} class="active"{%endifequal%}>{% if user.is_anonymous %}
+          <a href="/login/">ログイン</a>{% else %}
+          <a href="/login/">ログアウト【{{ user }}】</a>{% endif %}
+        </li>
+        </ul>
+      </div>
     </div>
   </div>
-</nav>
+</header>

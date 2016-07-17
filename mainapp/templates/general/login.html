@@ -1,90 +1,81 @@
 {% extends "base/base.html" %}
 {% load staticfiles %}
 {% block main %}
-<div class="container">
-  <div class="page-header">
-    <h3>
-      Login
-    </h3>
-    {% if error_list %}
-    <div class="alert alert-danger" role="alert">
-      <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-      <span class="sr-only">Error:</span>
-      {{ error_list }}
-    </div>
-    {% endif %}
-  </div>
-  <div class="row">
-    <div class="col-md-4 col-md-offset-4">
-        <div class="panel panel-default">
-            <div class="panel-body">
-                <form accept-charset="utf-8" role="form" action="/login/" method="post">
-                    {% csrf_token %}
-                    <fieldset>
-                        <div class="form-group">
-                            <input type="text" id="username" name="username" class="form-control"
-                                   placeholder="Username" required autofocus value="{{ username }}">
-                        </div>
-                        <div class="form-group">
-                            <input type="password" id="password" name="password" class="form-control"
-                                   placeholder="Password" required>
-                        </div>
-                        {% if "login_failed" in error_list %}
-                          <p class="text-danger">Sorry, that login was invalid.  Please try again.</p>
-                        {% endif %}
-                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Log in">
-                    </fieldset>
-                </form>
-                <hr />
-                <button class="btn btn-lg btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseSignup" aria-expanded="false" aria-controls="collapseSignup">
-                  Sign Up
-                </button>
-                <div {% if "signup_failed" in error_list %}class="collapsed"{% else%}class="collapse"{% endif %} id="collapseSignup">
-                  <div class="well">
-                    <form class="" accept-charset="utf-8" role="form" action="/signup/" method="post">
-                      {% csrf_token %}
-                      <fieldset>
-                        <div class="form-group">
-                          <label class="control-label" for="username">Username*</label>
-                          <input type="text" id="username" name="username" class="form-control"
-                                 placeholder="ex) m-miyaji" required autofocus value="{{ username }}">
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label" for="first_name">Frst name</label>
-                          <input type="text" id="first_name" name="first_name" class="form-control"
-                                 placeholder="ex) Masahiro" value="{{ first_name }}">
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label" for="last_name">Last name</label>
-                          <input type="text" id="last_name" name="last_name" class="form-control"
-                                 placeholder="ex) Miyaji" value="{{ last_name }}">
-                        </div>
-                        <div class="form-group">
-                          <label class="control-label" for="email">Email address*</label>
-                          <input type="text" id="email" name="email" class="form-control"
-                                 placeholder="ex) ruhenheim1223@gmail.com" required value="{{ email }}">
-                        </div>
-                        <div {% if "password" in error_target %}class="form-group has-error"{% else %}class="form-group"{% endif %}>
-                          <label class="control-label" for="password">Password*</label>
-                          <input type="password" id="password" name="password" class="form-control"
-                                 placeholder="Password" required>
-                        </div>
-                        <div {% if "password2" in error_target %}class="form-group has-error"{% else %}class="form-group"{% endif %}>
-                          <label class="control-label" for="password_confim">Password (Confirm)*</label>
-                          <input type="password" id="password_confirm" name="password_confirm" class="form-control"
-                                 placeholder="Password (Confirm)" required>
-                        </div>
-                        {% if "signup_failed" in error_list %}
-                        <p class="text-danger">Sorry, that user was invalid.  Please try again.</p>
-                        {% endif %}
-                        <input type="hidden" name="signup" value="true">
-                        <input class="btn btn-lg btn-success btn-block" type="submit" value="Submit">
-                      </fieldset>
-                    </form>
-                  </div>
-                </div>
+<div class="page-header">
+  <h3>
+    Login
+  </h3>
+</div>
+<div class="row">
+  <div class="col-md-4 col-md-offset-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <form accept-charset="utf-8" role="form" action="/login/" method="post">
+          {% csrf_token %}
+          <fieldset>
+            <div class="form-group">
+              <input type="text" id="username" name="username" class="form-control"
+                     placeholder="Username" required autofocus value="{{ username }}">
             </div>
+            <div class="form-group">
+              <input type="password" id="password" name="password" class="form-control"
+                     placeholder="Password" required>
+            </div>
+            {% if "login_failed" in error_list %}
+            <p class="text-danger">Sorry, that login was invalid.  Please try again.</p>
+            {% endif %}
+            <input class="btn btn-lg btn-success btn-block" type="submit" value="Log in">
+          </fieldset>
+        </form>
+        <hr />
+        <button class="btn btn-lg btn-primary btn-block" type="button" data-toggle="collapse" data-target="#collapseSignup" aria-expanded="false" aria-controls="collapseSignup">
+          Sign Up
+        </button>
+        <div {% if "signup_failed" in error_list %}class="collapsed"{% else%}class="collapse"{% endif %} id="collapseSignup">
+          <div class="well">
+            <form class="" accept-charset="utf-8" role="form" action="/login/" method="post">
+              {% csrf_token %}
+              <fieldset>
+                <div class="form-group">
+                  <label class="control-label" for="username">Username*</label>
+                  <input type="text" id="username" name="username" class="form-control"
+                         placeholder="ex) m-miyaji" required autofocus value="{{ username }}">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="first_name">Frst name</label>
+                  <input type="text" id="first_name" name="first_name" class="form-control"
+                         placeholder="ex) Masahiro" value="{{ first_name }}">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="last_name">Last name</label>
+                  <input type="text" id="last_name" name="last_name" class="form-control"
+                         placeholder="ex) Miyaji" value="{{ last_name }}">
+                </div>
+                <div class="form-group">
+                  <label class="control-label" for="email">Email address*</label>
+                  <input type="text" id="email" name="email" class="form-control"
+                         placeholder="ex) ruhenheim1223@gmail.com" required value="{{ email }}">
+                </div>
+                <div {% if "password" in error_target %}class="form-group has-error"{% else %}class="form-group"{% endif %}>
+                  <label class="control-label" for="password">Password*</label>
+                  <input type="password" id="password" name="password" class="form-control"
+                         placeholder="Password" required>
+                </div>
+                <div {% if "password2" in error_target %}class="form-group has-error"{% else %}class="form-group"{% endif %}>
+                  <label class="control-label" for="password_confim">Password (Confirm)*</label>
+                  <input type="password" id="password_confirm" name="password_confirm" class="form-control"
+                         placeholder="Password (Confirm)" required>
+                </div>
+                {% if "signup_failed" in error_list %}
+                <p class="text-danger">Sorry, that user was invalid.  Please try again.</p>
+                {% endif %}
+                <input type="hidden" name="signup" value="true">
+                <input class="btn btn-lg btn-success btn-block" type="submit" value="Submit">
+              </fieldset>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
   </div>
   {% endblock main %}
