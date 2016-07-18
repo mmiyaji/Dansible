@@ -12,7 +12,7 @@
       <div class="panel-body">
         <form accept-charset="utf-8" role="form" action="/login/" method="post">
           {% csrf_token %}
-          <input type="hidden" name="next" value="{{ request.GET.next }}" />
+          <input type="hidden" name="next" value="{{ request.GET.next|default:'/' }}" />
           <fieldset>
             <div class="form-group">
               <input type="text" id="username" name="username" class="form-control"

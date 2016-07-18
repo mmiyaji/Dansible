@@ -1,0 +1,22 @@
+{% extends "base/base.html" %}
+{% block main %}
+<h1 class="page-header">{{ title }}</h1>
+
+<header class="jumbotron subhead" id="overview">
+  <h2 id="title">{{ server.name }}</h2>
+  <hr />
+  <p class="lead">{{ server.comment }}</p>
+  <div class="subnav">
+    <ul class="nav nav-pills">
+      <li><a href="#title">タイトル</a></li>
+      <li><a href="#info">詳細</a></li>
+    </ul>
+  </div>
+</header>
+
+<section id="info">
+  <div class="page-header">
+    <h1>情報詳細</h1>
+  </div>
+</section>
+{% endblock main %}

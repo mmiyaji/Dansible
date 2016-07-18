@@ -9,6 +9,7 @@ Copyright (c) 2016  ruhenheim.org. All rights reserved.
 
 from __future__ import unicode_literals
 
+import datetime, time, uuid
 from django.db import models
 from django.contrib.auth import models as auth_models
 
@@ -19,6 +20,7 @@ class ServerAttribute(models.Model):
     name = models.CharField(max_length = 100, default="", blank=False, null=False, db_index=True)
     comment = models.TextField(default="")
 
+    uuid = models.CharField(max_length = 32, default=uuid.uuid4().hex, editable=False, unique=True)
     isvalid = models.BooleanField(default=True, db_index=True)
     updated_at = models.DateTimeField(auto_now = True, db_index=True)
     created_at = models.DateTimeField(auto_now_add = True, db_index=True)
@@ -63,6 +65,7 @@ class Server(models.Model):
     name = models.CharField(max_length = 100, default="", blank=False, null=False, db_index=True)
     comment = models.TextField(default="")
 
+    uuid = models.CharField(max_length = 32, default=uuid.uuid4().hex, editable=False, unique=True)
     isvalid = models.BooleanField(default=True, db_index=True)
     updated_at = models.DateTimeField(auto_now = True, db_index=True)
     created_at = models.DateTimeField(auto_now_add = True, db_index=True)
@@ -88,6 +91,14 @@ class Server(models.Model):
             result = None
         return result
     @staticmethod
+    def get_by_uuid(target_uuid):
+        result = None
+        try:
+            result = Server.objects.filter(uuid__exact=target_uuid)[0]
+        except:
+            result = None
+        return result
+    @staticmethod
     def get_by_name(name=""):
         result=None
         try:
@@ -109,6 +120,7 @@ class OSTemplate(models.Model):
 
     server_attribute = models.ForeignKey(ServerAttribute, db_index=True)
 
+    uuid = models.CharField(max_length = 32, default=uuid.uuid4().hex, editable=False, unique=True)
     isvalid = models.BooleanField(default=True, db_index=True)
     updated_at = models.DateTimeField(auto_now = True, db_index=True)
     created_at = models.DateTimeField(auto_now_add = True, db_index=True)
@@ -158,6 +170,7 @@ class ConfigFile(models.Model):
     file_owner = models.CharField(max_length = 100, default="", blank=False, null=False, db_index=True)
     file_group = models.CharField(max_length = 100, default="", blank=False, null=False, db_index=True)
 
+    uuid = models.CharField(max_length = 32, default=uuid.uuid4().hex, editable=False, unique=True)
     isvalid = models.BooleanField(default=True, db_index=True)
     updated_at = models.DateTimeField(auto_now = True, db_index=True)
     created_at = models.DateTimeField(auto_now_add = True, db_index=True)
@@ -207,6 +220,7 @@ class ConfigData(models.Model):
     file_owner = models.CharField(max_length = 100, default="", blank=False, null=False, db_index=True)
     file_group = models.CharField(max_length = 100, default="", blank=False, null=False, db_index=True)
 
+    uuid = models.CharField(max_length = 32, default=uuid.uuid4().hex, editable=False, unique=True)
     isvalid = models.BooleanField(default=True, db_index=True)
     updated_at = models.DateTimeField(auto_now = True, db_index=True)
     created_at = models.DateTimeField(auto_now_add = True, db_index=True)
@@ -254,6 +268,7 @@ class ConfigCommand(models.Model):
     command = models.CharField(max_length = 100, default="", blank=False, null=False, db_index=True)
     command_user = models.CharField(max_length = 100, default="", blank=False, null=False, db_index=True)
 
+    uuid = models.CharField(max_length = 32, default=uuid.uuid4().hex, editable=False, unique=True)
     isvalid = models.BooleanField(default=True, db_index=True)
     updated_at = models.DateTimeField(auto_now = True, db_index=True)
     created_at = models.DateTimeField(auto_now_add = True, db_index=True)
@@ -308,6 +323,7 @@ class Config(models.Model):
     config_data = models.ForeignKey(ConfigData, db_index=True)
     config_command = models.ForeignKey(ConfigCommand, db_index=True)
 
+    uuid = models.CharField(max_length = 32, default=uuid.uuid4().hex, editable=False, unique=True)
     isvalid = models.BooleanField(default=True, db_index=True)
     updated_at = models.DateTimeField(auto_now = True, db_index=True)
     created_at = models.DateTimeField(auto_now_add = True, db_index=True)

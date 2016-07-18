@@ -7,24 +7,21 @@
     <thead>
       <tr>
         <th>#</th>
-        <th>ID</th>
         <th>Name</th>
-        <th>Header</th>
-        <th>Header</th>
+        <th>Comment</th>
+        <th>Created at</th>
       </tr>
     </thead>
     <tbody>
       {% for server in server_list %}
       <tr>
         <td>{{ forloop.counter }}</td>
-        <td>{{ server.id }}</td>
-        <td>{{ server.name }}</td>
-        <td>dolor</td>
-        <td>sit</td>
+        <td><a href="/server/{{ server.uuid }}">{{ server.name }}</a></td>
+        <td>{{ server.comment }}</td>
+        <td>{{ server.created_at }}</td>
       </tr>
       {% endfor %}
     </tbody>
   </table>
-</div>
 </div>
 {% endblock main %}

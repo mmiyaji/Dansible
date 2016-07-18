@@ -90,5 +90,5 @@ ENV/
 
 # custom for Django
 db.sqlite3
-migrations/*
-!migrations/__init__.py
+*/migrations/*
+!*/migrations/__init__.py
