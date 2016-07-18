@@ -20,12 +20,12 @@ def home(request):
     order = "-created_at"
     page = request.GET.get('page', page)
     span = request.GET.get('span', span)
-    servers,entry_count = Server.get_items(span=span, page=page)
+    server_list,entry_count = Server.get_items(span=span, page=page)
 
     temp_values = {
         "target":"server",
         "title":u"サーバ定義一覧ページ",
-        "servers":servers,
+        "server_list":server_list,
         "subscroll":True,
     }
     return render(request, 'server/index.html', temp_values)

@@ -20,12 +20,12 @@ def home(request):
     order = "-created_at"
     page = request.GET.get('page', page)
     span = request.GET.get('span', span)
-    ostemplates,entry_count = OSTemplate.get_items(span=span, page=page)
+    ostemplate_list,entry_count = OSTemplate.get_items(span=span, page=page)
 
     temp_values = {
-        "target":"config",
-        "title":u"Config定義一覧ページ",
-        "ostemplates":ostemplates,
+        "target":"ostemplate",
+        "title":u"OS Template定義一覧ページ",
+        "ostemplate_list":ostemplate_list,
         "subscroll":True,
     }
     return render(request, 'server/index.html', temp_values)

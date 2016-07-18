@@ -49,6 +49,7 @@ def login_view(request):
     first_name = last_name = email = ''
     error_list = []
     error_target = []
+    next_url = "/"
 
     if request.GET:
         username = request.GET.get('username','')
@@ -62,11 +63,12 @@ def login_view(request):
         else:
             username = request.POST['username']
             password = request.POST['password']
+            next_url = request.POST.get('next', next_url)
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect('/')
+                    return HttpResponseRedirect(next_url)
                 else:
                     error_list.append('login_failed')
             else:
