@@ -1,36 +1,13 @@
 #!/usr/bin/env python
 # encoding: utf-8
-'''
-views.py
+"""
+general.py
 
-Created by mmiyaji on 2016-07-10.
+Created by mmiyaji on 2016-07-17.
 Copyright (c) 2016  ruhenheim.org. All rights reserved.
-'''
-from django.shortcuts import render
-from django.http import HttpResponse
+"""
 
-import os, re, sys, commands, time, datetime, random, logging
-from django.http import HttpResponse, HttpResponseRedirect
-from django.template import Context, loader
-from django.template import RequestContext
-from django.shortcuts import render_to_response
-from django.core.urlresolvers import reverse
-from django.contrib import auth
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_protect
-from django.utils.encoding import force_unicode, smart_str
-from django.core import serializers
-from django.conf import settings
-from django.http import Http404
-from django.utils.http import urlencode
-from django.http import Http404
-
-from django.template.loader import get_template
-from mainapp.models import *
-
-logger = logging.getLogger(__name__)
+from views import *
 
 def home(request):
     """
@@ -42,6 +19,7 @@ def home(request):
     }
     return render(request, 'general/index.html', temp_values)
 
+@csrf_protect
 def login_view(request):
     #強制的にログアウト
     logout(request)
@@ -49,7 +27,6 @@ def login_view(request):
     first_name = last_name = email = ''
     error_list = []
     error_target = []
-    next_url = "/"
 
     if request.GET:
         username = request.GET.get('username','')
@@ -63,12 +40,11 @@ def login_view(request):
         else:
             username = request.POST['username']
             password = request.POST['password']
-            next_url = request.POST.get('next', next_url)
             user = authenticate(username=username, password=password)
             if user is not None:
                 if user.is_active:
                     login(request, user)
-                    return HttpResponseRedirect(next_url)
+                    return HttpResponseRedirect('/')
                 else:
                     error_list.append('login_failed')
             else:
@@ -84,6 +60,7 @@ def login_view(request):
     }
     return render(request, 'general/login.html', temp_values)
 
+@csrf_protect
 def signup_view(request):
     username = password = password2 = ''
 
@@ -137,13 +114,3 @@ def signup_view(request):
         return render(request, 'general/login.html', temp_values)
     else:
         raise Http404
-
-def valid_pass(password):
-    """
-    validate password
-    Arguments:
-    - `password`:
-    """
-    if len(password) < 6:
-        return 1
-    return 0

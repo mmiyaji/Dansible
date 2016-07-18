@@ -88,5 +88,7 @@ ENV/
 # Rope project settings
 .ropeproject
 
-# custom
+# custom for Django
 db.sqlite3
+migrations/*
+!migrations/__init__.py

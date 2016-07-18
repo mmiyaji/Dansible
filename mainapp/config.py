@@ -20,12 +20,12 @@ def home(request):
     order = "-created_at"
     page = request.GET.get('page', page)
     span = request.GET.get('span', span)
-    configs,entry_count = Config.get_items(span=span, page=page)
+    config_list,entry_count = Config.get_items(span=span, page=page)
 
     temp_values = {
         "target":"config",
         "title":u"Config定義一覧ページ",
-        "configs":configs,
+        "config_list":config_list,
         "subscroll":True,
     }
     return render(request, 'server/index.html', temp_values)
